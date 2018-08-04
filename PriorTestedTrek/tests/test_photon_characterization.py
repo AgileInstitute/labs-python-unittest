@@ -1,11 +1,11 @@
 
 import unittest
 
-from TestedTrek.Game.game import Game
-from TestedTrek.Game.RandomWrapper import Random
-from TestedTrek.Tests.MockGalaxy import MockGalaxy
-from TestedTrek.Tests.MockKlingon import MockKlingon
-from TestedTrek.Tests.MockRandom import MockRandom
+from trek.Game import Game
+from trek.Random import Random
+from mocks.MockGalaxy import MockGalaxy
+from mocks.MockKlingon import MockKlingon
+from mocks.MockRandom import MockRandom
 
 
 class PhotonPinningTests(unittest.TestCase):
@@ -16,7 +16,7 @@ class PhotonPinningTests(unittest.TestCase):
         self.context.SetValueForTesting("command", "photon")
 
     def test_NotifiedIfNoTorpedoesRemain(self):
-        self.game.torpedoes = 0
+        self.game.Torpedoes = 0
         self.context.SetValueForTesting("target", MockKlingon(2000, 200))
         self.game.FireWeapon(galaxy=self.context)
         self.assertEqual(
@@ -28,12 +28,12 @@ class PhotonPinningTests(unittest.TestCase):
         distanceWhereRandomFactorsHoldSway = 2500
         self.context.SetValueForTesting("target", MockKlingon(distanceWhereRandomFactorsHoldSway, 200))
         Game.generator = MockRandom()  # without this the test would often fail
-        self.game.FireWeapon(galaxy=self.context)
+        self.game.FireWeapon(self.context)
         self.assertEqual(
             "Torpedo missed Klingon at 2500 sectors... || ",
             self.context.GetAllOutput()
         )
-        self.assertEqual(7, self.game.torpedoes)
+        self.assertEqual(7, self.game.Torpedoes)
 
     def test_TorpedoMissesDueToDistanceAndCleverKlingonEvasiveActions(self):
         distanceWhereTorpedoesAlwaysMiss = 3500
@@ -43,7 +43,7 @@ class PhotonPinningTests(unittest.TestCase):
             "Torpedo missed Klingon at 3500 sectors... || ",
             self.context.GetAllOutput()
         )
-        self.assertEqual(7, self.game.torpedoes)
+        self.assertEqual(7, self.game.Torpedoes)
 
     def test_TorpedoDestroysKlingon(self):
         klingon = MockKlingon(500, 200)
@@ -54,7 +54,7 @@ class PhotonPinningTests(unittest.TestCase):
             "Photons hit Klingon at 500 sectors with 825 units || Klingon destroyed! || ",
             self.context.GetAllOutput()
         )
-        self.assertEqual(7, self.game.torpedoes)
+        self.assertEqual(7, self.game.Torpedoes)
         self.assertTrue(klingon.DeleteWasCalled())
 
     def test_TorpedoDamagesKlingon(self):
@@ -65,7 +65,7 @@ class PhotonPinningTests(unittest.TestCase):
             "Photons hit Klingon at 500 sectors with 825 units || Klingon has 1175 remaining || ",
             self.context.GetAllOutput()
         )
-        self.assertEqual(7, self.game.torpedoes)
+        self.assertEqual(7, self.game.Torpedoes)
 
     def RemoveTheMockRandomGeneratorForOtherTests_IReallyWantToRefactorThatStaticVariableSoon(self):
         Game.generator = Random()

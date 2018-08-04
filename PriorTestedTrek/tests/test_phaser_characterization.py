@@ -1,24 +1,25 @@
 
 import unittest
 
-from TestedTrek.Game.game import Game
-from TestedTrek.Game.RandomWrapper import Random
+from trek.Game import Game
+from trek.Random import Random
 
-from TestedTrek.Tests.MockGalaxy import MockGalaxy
-from TestedTrek.Tests.MockKlingon import MockKlingon
-from TestedTrek.Tests.MockRandom import MockRandom
+from tests.mocks.MockGalaxy import MockGalaxy
+from tests.mocks.MockKlingon import MockKlingon
+from tests.mocks.MockRandom import MockRandom
 
 
 class PhaserPinningTests(unittest.TestCase):
 
     def setUp(self):
+
         self.game = Game()
         self.context = MockGalaxy()
         self.energy_in_new_game = 10000
+
         self.context.SetValueForTesting("command", "phaser")
 
     def test_PhasersFiredWithInsufficientEnergy(self):
-
         self.context.SetValueForTesting("amount", str(self.energy_in_new_game + 1))
         self.game.FireWeapon(galaxy=self.context)
         self.assertEqual("Insufficient energy to fire phasers! || ",

@@ -1,13 +1,13 @@
 
 #
+#
 # THIS FILE IS UNTOUCHABLE
 #
-# Please do not alter this file. Pretend you didn't see it. ;-)
 #
 
 
-import random
 import time
+import random
 
 
 class LunExServiceUnavailableException(Exception):
@@ -23,18 +23,16 @@ class SecurityExchangeTransmissionInterface(object):
 class LunExServices(SecurityExchangeTransmissionInterface):
 
     def current_price(self, symbol):
-        self.pauseFiveSeconds()
-        self.seedRandomGenerator()
-        if self.randomIntegerBetweenZeroAnd(100) > 80:
+        self.pause()
+        if self.invisible_hand(100) > 80:
             raise LunExServiceUnavailableException()
 
-        return 42 + self.randomIntegerBetweenZeroAnd(17)
+        randomPrice = 42 + (self.invisible_hand(12))
+        return randomPrice
 
-    def pauseFiveSeconds(self):
-        time.sleep(5)
+    def pause(self):
+        time.sleep(5000)
 
-    def seedRandomGenerator(self):
-        random.seed(long(time.time() * 256))
+    def invisible_hand(self, maxValue):
+        return maxValue*random.random()
 
-    def randomIntegerBetweenZeroAnd(self, maximum):
-        return int(random.random() * maximum)
