@@ -67,9 +67,6 @@ class PhotonPinningTests(unittest.TestCase):
         )
         self.assertEqual(7, self.game.torpedoes)
 
-    def RemoveTheMockRandomGeneratorForOtherTests_IReallyWantToRefactorThatStaticVariableSoon(self):
-        Game.generator = Random()
-
     def tearDown(self):
-        self.RemoveTheMockRandomGeneratorForOtherTests_IReallyWantToRefactorThatStaticVariableSoon()
+        Game.generator = Random()
 
