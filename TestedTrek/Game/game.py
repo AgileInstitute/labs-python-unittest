@@ -1,78 +1,74 @@
 
 from TestedTrek.Game.galaxy import Galaxy
 from TestedTrek.Game.RandomWrapper import Random
-from TestedTrek.Game.weaponfactory import WeaponFactory
-from tdd.notifications import AttackNotificationsFactory
 
 
 class Game(object):
 
-    generator = Random()  # DI it
-    MaxDistance = 4000  # constant
+    generator = Random()
 
-    def __init__(self, randomgenerator=None):
-        # this is terrible
-        # move this to default values in weapons and leave out of create()?
-        self._initial_ammo = {
-            'phaser': 10000,
-            'photon': 8
-        }
-        if randomgenerator is not None:
-            Game.generator = randomgenerator
+    def __init__(self):
+        self.e = 10000
+        self.t = 8
 
-        self.weapons = { }
-
-    def _get_remaining_ammo(self, weapon_name):
-        weapon = self.weapons.get(weapon_name, None)
-        if weapon:
-            return weapon.energy
-        else:
-            return self._initial_ammo.get(weapon_name, None)
-
-    # horribly not pythonic naming. would have to change tests also
     def EnergyRemaining(self):
-        return self._get_remaining_ammo('phaser')
+        return self.e
 
-    # same construct for energy? eh. both suck
     @property
     def torpedoes(self):
-        return self._get_remaining_ammo('photon')
+        return self.t
 
     @torpedoes.setter
     def torpedoes(self, value):
-        try:
-            self.weapons['photon'].energy = value
-        except:
-            self._initial_ammo['photon'] = value
+        self.t = value
 
-    def _fire_weapon(self, wgalaxy):
-        command = wgalaxy.Parameter("command")
-        attack_notification = AttackNotificationsFactory.create(
-            weapon_name=command,
-            callback=wgalaxy.WriteLine
-        )
+    def _fire_weapon(self, wg):
+        if (wg.Parameter("command") == "phaser"):
+            amount = int(wg.Parameter("amount"))
+            enemy = wg.Variable("target")
 
-        # better input handling
-        amt_str = wgalaxy.Parameter("amount")
-        amt = int(amt_str) if amt_str else 1
-        weapon = None
-        try:
-            weapon = WeaponFactory.create(
-                weapon_name=command,
-                energy=self._get_remaining_ammo(command),
-                enemy=wgalaxy.Variable("target"),
-                delta_energy=amt,
-                random_generator=Game.generator,
-                max_distance=Game.MaxDistance,
-                attack_notifications=attack_notification
-            )
-            weapon_system = self.weapons.setdefault(
-                command,
-                weapon
-            )
-            weapon_system.Fire()
-        except KeyError:
-            attack_notification.callback("Invalid command " + command)
+            if (self.e >= amount):
+                distance = enemy.Distance()
+                if (distance > 4000):
+                    wg.WriteLine("Klingon out of range of phasers at " + str(distance) + " sectors...")
+                else:
+                    damage = amount - (((amount / 20) * distance / 200) + Game.Rnd(200))
+                    if (damage < 1):
+                        damage = 1
+                    wg.WriteLine("Phasers hit Klingon at " + str(distance) + " sectors with " + str(damage) + " units")
+                    if (damage < enemy.GetEnergy()):
+                        enemy.SetEnergy(enemy.GetEnergy() - damage)
+                        wg.WriteLine("Klingon has " + str(enemy.GetEnergy()) + " remaining")
+                    else:
+                        wg.WriteLine("Klingon destroyed!")
+                        enemy.Delete()
+
+                self.e -= amount
+            else:
+                wg.WriteLine("Insufficient energy to fire phasers!")
+
+
+        elif (wg.Parameter("command") == "photon"):
+            enemy = wg.Variable("target")
+            if (self.t > 0):
+                distance = enemy.Distance()
+                if ((Game.Rnd(4) + ((distance / 500) + 1) > 7)):
+                    wg.WriteLine("Torpedo missed Klingon at " + str(distance) + " sectors...")
+                else:
+                    damage = 800 + Game.Rnd(50)
+                    wg.WriteLine("Photons hit Klingon at " + str(distance) + " sectors with " + str(damage) + " units")
+
+                    if (damage < enemy.GetEnergy()):
+                        enemy.SetEnergy(enemy.GetEnergy() - damage)
+                        wg.WriteLine("Klingon has " + str(enemy.GetEnergy()) + " remaining")
+                    else:
+                        wg.WriteLine("Klingon destroyed!")
+                        enemy.Delete()
+
+                self.t -= 1
+
+            else:
+                wg.WriteLine("No more photon torpedoes!")
 
     def FireWeapon(self, galaxy=None, webContext=None):
         if galaxy:
@@ -81,5 +77,5 @@ class Game(object):
             self._fire_weapon(Galaxy(webContext=webContext))
 
     @staticmethod
-    def Rand(maximum):
+    def Rnd(maximum):
         return Game.generator.next(maximum)
