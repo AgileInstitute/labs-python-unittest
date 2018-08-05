@@ -5,7 +5,6 @@ from TestedTrek.Game.RandomWrapper import Random
 class Klingon(object):
 
     def __init__(self):
-        self.name = 'Klingon'
         self.distance = 100 + Random().next(4000)
         self.energy = 1000 + Random().next(2000)
 
