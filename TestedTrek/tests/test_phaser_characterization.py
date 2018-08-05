@@ -64,8 +64,5 @@ class PhaserPinningTests(unittest.TestCase):
             self.context.GetAllOutput()
         )
 
-    def RemoveTheMockRandomGeneratorForOtherTests_IReallyWantToRefactorThatStaticVariableSoon(self):
-        Game.generator = Random()
-
     def tearDown(self):
-        self.RemoveTheMockRandomGeneratorForOtherTests_IReallyWantToRefactorThatStaticVariableSoon()
+        Game.generator = Random()
