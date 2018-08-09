@@ -42,12 +42,9 @@ class Game(object):
                     else:
                         wg.WriteLine("Klingon destroyed!")
                         enemy.Delete()
-
                 self.e -= amount
             else:
                 wg.WriteLine("Insufficient energy to fire phasers!")
-
-
         elif (wg.Parameter("command") == "photon"):
             enemy = wg.Variable("target")
             if (self.t > 0):
@@ -64,9 +61,7 @@ class Game(object):
                     else:
                         wg.WriteLine("Klingon destroyed!")
                         enemy.Delete()
-
                 self.t -= 1
-
             else:
                 wg.WriteLine("No more photon torpedoes!")
 

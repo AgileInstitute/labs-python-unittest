@@ -15,5 +15,5 @@ class MockKlingon(Klingon):
     def Delete(self):
         self.deleteCalled = True
 
-    def DeleteWasCalled(self):
+    def delete_was_called(self):
         return self.deleteCalled

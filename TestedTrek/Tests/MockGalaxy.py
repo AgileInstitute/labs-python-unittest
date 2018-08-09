@@ -18,8 +18,8 @@ class MockGalaxy(Galaxy):
         fakeNewLine = " || "
         self.my_string += (str(message) + fakeNewLine)
 
-    def SetValueForTesting(self, key, value):
+    def set_value_for_testing(self, key, value):
         self.stuff[key] = value
 
-    def GetAllOutput(self):
+    def get_all_output(self):
         return self.my_string

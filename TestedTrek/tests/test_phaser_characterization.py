@@ -9,66 +9,67 @@ from TestedTrek.Tests.MockKlingon import MockKlingon
 from TestedTrek.Tests.MockRandom import MockRandom
 
 
-class PhaserPinningTests(unittest.TestCase):
+class PhaserCharacterizationTests(unittest.TestCase):
 
     def setUp(self):
         self.game = Game()
         self.context = MockGalaxy()
         self.energy_in_new_game = 10000
-        self.context.SetValueForTesting("command", "phaser")
+        self.context.set_value_for_testing("command", "phaser")
 
     def test_phasers_fired_with_insufficient_energy(self):
 
-        self.context.SetValueForTesting("amount", str(self.energy_in_new_game + 1))
+        self.context.set_value_for_testing("amount", str(self.energy_in_new_game + 1))
 
         self.game.FireWeapon(galaxy=self.context)
 
         self.assertEqual("Insufficient energy to fire phasers! || ",
-                         self.context.GetAllOutput())
+                         self.context.get_all_output())
 
     def test_phasers_fired_when_klingon_out_of_range_and_energy_expended_anyway(self):
-        maxPhaserRange = 4000
-        outOfRange = maxPhaserRange + 1
-        self.context.SetValueForTesting("amount", "1000")
-        self.context.SetValueForTesting("target", MockKlingon(outOfRange))
+        max_phaser_range = 4000
+        out_of_range = max_phaser_range + 1
+        self.context.set_value_for_testing("amount", "1000")
+        self.context.set_value_for_testing("target", MockKlingon(out_of_range))
 
         self.game.FireWeapon(galaxy=self.context)
 
         self.assertEqual(
-            "Klingon out of range of phasers at " + str(outOfRange) + " sectors... || ",
-            self.context.GetAllOutput()
+            "Klingon out of range of phasers at " + str(out_of_range) + " sectors... || ",
+            self.context.get_all_output()
         )
         self.assertEqual(self.energy_in_new_game - 1000, self.game.EnergyRemaining())
 
     def test_phasers_fired_klingon_destroyed(self):
         klingon = MockKlingon(distance=2000, energy=200)
-        self.context.SetValueForTesting("amount", "1000")
-        self.context.SetValueForTesting("target", klingon)
+        self.context.set_value_for_testing("amount", "1000")
+        self.context.set_value_for_testing("target", klingon)
         Game.generator = MockRandom()
 
         self.game.FireWeapon(galaxy=self.context)
 
         self.assertEqual(
             "Phasers hit Klingon at 2000 sectors with 400 units || Klingon destroyed! || ",
-            self.context.GetAllOutput()
+            self.context.get_all_output()
         )
         self.assertEqual(self.energy_in_new_game - 1000, self.game.EnergyRemaining())
-        self.assertTrue(klingon.DeleteWasCalled())
+        self.assertTrue(klingon.delete_was_called())
 
-    def test_phasers_damage_of_zero_still_hits_and_nondestructive_phaser_damage_displays_remaining(self):
-        # yes, this is a bug - eventually there will be a different minimum fired
-        minimalFired = "0"
-        minimalHit = "1"
-        self.context.SetValueForTesting("amount", minimalFired)
-        self.context.SetValueForTesting("target", MockKlingon(2000, 200))
+    def test_phaser_damage_displays_remaining_and_minimum_damage_of_one(self):
+        # defect #038429: eventually there will be a different minimum fired
+        minimal_fired = "0"
+
+        minimal_hit = "1"
+        self.context.set_value_for_testing("amount", minimal_fired)
+        self.context.set_value_for_testing("target", MockKlingon(2000, 200))
         Game.generator = MockRandom()
 
         self.game.FireWeapon(galaxy=self.context)
 
         self.assertEqual(
             "Phasers hit Klingon at 2000 sectors with " +
-            minimalHit + " units || Klingon has 199 remaining || ",
-            self.context.GetAllOutput()
+            minimal_hit + " units || Klingon has 199 remaining || ",
+            self.context.get_all_output()
         )
 
     def tearDown(self):
