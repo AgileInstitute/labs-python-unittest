@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="7ba45788-ebda-4cd1-9ffe-a95b91c29066" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/TestedTrek/Tests/test_photon_characterization.py" beforeDir="false" afterPath="$PROJECT_DIR$/TestedTrek/Tests/test_photon_characterization.py" afterDir="false" />
-    </list>
+    <list default="true" id="7ba45788-ebda-4cd1-9ffe-a95b91c29066" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -14,18 +12,19 @@
     <session id="1401568292">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
+          <entry key="project.closed" value="1" />
           <entry key="project.open.time.2" value="1" />
           <entry key="project.opened" value="1" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
-          <entry key="py" value="7" />
+          <entry key="py" value="8" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
-          <entry key="Python" value="7" />
+          <entry key="Python" value="8" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
@@ -63,16 +62,21 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/TestedTrek/Tests/test_photon_characterization.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="813">
+            <state relative-caret-position="945">
               <caret line="69" selection-start-line="69" selection-end-line="69" />
               <folding>
                 <marker date="1533508770629" expanded="true" signature="2680:2684" ph="..." />
               </folding>
             </state>
           </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/TestedTrek/Tests/MockGalaxy.py">
+          <provider selected="true" editor-type-id="text-editor" />
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
@@ -235,13 +239,16 @@
     <history-entry file="Unittests_in_Tests - 2018.08.05 at 15h 35m 20s.xml">
       <configuration name="Unittests in Tests" configurationId="tests" />
     </history-entry>
+    <history-entry file="Unittests_in_Tests - 2018.08.05 at 15h 42m 11s.xml">
+      <configuration name="Unittests in Tests" configurationId="tests" />
+    </history-entry>
   </component>
   <component name="ToolWindowManager">
     <frame x="-1200" y="-777" width="1200" height="1577" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Favorites" side_tool="true" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.302799" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.302799" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Version Control" />
       <window_info anchor="bottom" id="Python Console" />
@@ -249,7 +256,7 @@
       <window_info anchor="bottom" id="Event Log" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.32996634" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.32996634" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -299,18 +306,18 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/TestedTrek/Tests/MockGalaxy.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/TestedTrek/Tests/test_photon_characterization.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="813">
+        <state relative-caret-position="945">
           <caret line="69" selection-start-line="69" selection-end-line="69" />
           <folding>
             <marker date="1533508770629" expanded="true" signature="2680:2684" ph="..." />
           </folding>
         </state>
       </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/TestedTrek/Tests/MockGalaxy.py">
+      <provider selected="true" editor-type-id="text-editor" />
     </entry>
   </component>
 </project>
