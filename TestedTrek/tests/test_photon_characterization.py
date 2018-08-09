@@ -20,7 +20,7 @@ class PhotonPinningTests(unittest.TestCase):
         self.context.SetValueForTesting("target", MockKlingon(2000, 200))
 
         self.game.FireWeapon(galaxy=self.context)
-        
+
         self.assertEqual(
             "No more photon torpedoes! || ",
             self.context.GetAllOutput()

@@ -45,22 +45,26 @@ class PhaserPinningTests(unittest.TestCase):
         self.context.SetValueForTesting("amount", "1000")
         self.context.SetValueForTesting("target", klingon)
         Game.generator = MockRandom()
+
         self.game.FireWeapon(galaxy=self.context)
+
         self.assertEqual(
             "Phasers hit Klingon at 2000 sectors with 400 units || Klingon destroyed! || ",
             self.context.GetAllOutput()
         )
-
         self.assertEqual(self.energy_in_new_game - 1000, self.game.EnergyRemaining())
         self.assertTrue(klingon.DeleteWasCalled())
 
     def test_phasers_damage_of_zero_still_hits_and_nondestructive_phaser_damage_displays_remaining(self):
+        # yes, this is a bug - eventually there will be a different minimum fired
         minimalFired = "0"
         minimalHit = "1"
         self.context.SetValueForTesting("amount", minimalFired)
         self.context.SetValueForTesting("target", MockKlingon(2000, 200))
         Game.generator = MockRandom()
+
         self.game.FireWeapon(galaxy=self.context)
+
         self.assertEqual(
             "Phasers hit Klingon at 2000 sectors with " +
             minimalHit + " units || Klingon has 199 remaining || ",
