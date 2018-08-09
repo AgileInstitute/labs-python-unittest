@@ -1,6 +1,6 @@
-from TestedTrek.Untouchables.webgadget import WebGadget
-from TestedTrek.Game.klingon import Klingon
-from TestedTrek.Game.game import Game
+from MessTrek.Untouchables.webgadget import WebGadget
+from MessTrek.Game.klingon import Klingon
+from MessTrek.Game.game import Game
 
 if __name__ == '__main__':
     print("Simple Star Trek")

@@ -1,12 +1,12 @@
 
-from TestedTrek.Game.RandomWrapper import Random
+from MessTrek.Game.game import Game
 
 
 class Klingon(object):
 
     def __init__(self):
-        self.distance = 100 + Random().next(4000)
-        self.energy = 1000 + Random().next(2000)
+        self.distance = 100 + Game.Rnd(4000)
+        self.energy = 1000 + Game.Rnd(2000)
 
     def Distance(self):
         return self.distance

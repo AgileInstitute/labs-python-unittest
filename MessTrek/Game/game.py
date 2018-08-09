@@ -1,26 +1,12 @@
+import random
 
-from TestedTrek.Game.galaxy import Galaxy
-from TestedTrek.Game.RandomWrapper import Random
 
 
 class Game(object):
 
-    generator = Random()
-
     def __init__(self):
         self.e = 10000
         self.t = 8
-
-    def EnergyRemaining(self):
-        return self.e
-
-    @property
-    def torpedoes(self):
-        return self.t
-
-    @torpedoes.setter
-    def torpedoes(self, value):
-        self.t = value
 
     def _fire_weapon(self, wg):
         if (wg.Parameter("command") == "phaser"):
@@ -70,12 +56,9 @@ class Game(object):
             else:
                 wg.WriteLine("No more photon torpedoes!")
 
-    def FireWeapon(self, galaxy=None, webContext=None):
-        if galaxy:
-            self._fire_weapon(galaxy)
-        elif webContext:
-            self._fire_weapon(Galaxy(webContext=webContext))
+    def FireWeapon(self, webContext=None):
+            self._fire_weapon(webContext)
 
     @staticmethod
     def Rnd(maximum):
-        return Game.generator.next(maximum)
+        return maximum * random.random()
