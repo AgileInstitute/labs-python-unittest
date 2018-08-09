@@ -5,7 +5,4 @@
 # IDEA PyCharm stuff:
 
 .idea/*
-*.idea
-*/workspace.xml
 *.pyc
-*/*.pyc
