@@ -17,27 +17,30 @@ class PhaserPinningTests(unittest.TestCase):
         self.energy_in_new_game = 10000
         self.context.SetValueForTesting("command", "phaser")
 
-    def test_PhasersFiredWithInsufficientEnergy(self):
+    def test_phasers_fired_with_insufficient_energy(self):
 
         self.context.SetValueForTesting("amount", str(self.energy_in_new_game + 1))
+
         self.game.FireWeapon(galaxy=self.context)
+
         self.assertEqual("Insufficient energy to fire phasers! || ",
                          self.context.GetAllOutput())
 
-    def test_PhasersFiredWhenKlingonOutOfRange_AndEnergyExpendedAnyway(self):
+    def test_phasers_fired_when_klingon_out_of_range_and_energy_expended_anyway(self):
         maxPhaserRange = 4000
         outOfRange = maxPhaserRange + 1
         self.context.SetValueForTesting("amount", "1000")
         self.context.SetValueForTesting("target", MockKlingon(outOfRange))
 
         self.game.FireWeapon(galaxy=self.context)
+
         self.assertEqual(
             "Klingon out of range of phasers at " + str(outOfRange) + " sectors... || ",
             self.context.GetAllOutput()
         )
         self.assertEqual(self.energy_in_new_game - 1000, self.game.EnergyRemaining())
 
-    def test_PhasersFiredKlingonDestroyed(self):
+    def test_phasers_fired_klingon_destroyed(self):
         klingon = MockKlingon(distance=2000, energy=200)
         self.context.SetValueForTesting("amount", "1000")
         self.context.SetValueForTesting("target", klingon)
@@ -51,7 +54,7 @@ class PhaserPinningTests(unittest.TestCase):
         self.assertEqual(self.energy_in_new_game - 1000, self.game.EnergyRemaining())
         self.assertTrue(klingon.DeleteWasCalled())
 
-    def test_PhasersDamageOfZeroStillHits_AndNondestructivePhaserDamageDisplaysRemaining(self):
+    def test_phasers_damage_of_zero_still_hits_and_nondestructive_phaser_damage_displays_remaining(self):
         minimalFired = "0"
         minimalHit = "1"
         self.context.SetValueForTesting("amount", minimalFired)

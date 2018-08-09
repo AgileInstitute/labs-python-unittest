@@ -22,6 +22,4 @@ class MockGalaxy(Galaxy):
         self.stuff[key] = value
 
     def GetAllOutput(self):
-        res = self.my_string
-        self.my_string = ''
-        return res
+        return self.my_string

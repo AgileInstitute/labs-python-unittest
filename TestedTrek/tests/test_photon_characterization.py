@@ -15,41 +15,49 @@ class PhotonPinningTests(unittest.TestCase):
         self.context = MockGalaxy()
         self.context.SetValueForTesting("command", "photon")
 
-    def test_NotifiedIfNoTorpedoesRemain(self):
+    def test_notified_if_no_torpedoes_remain(self):
         self.game.torpedoes = 0
         self.context.SetValueForTesting("target", MockKlingon(2000, 200))
+
         self.game.FireWeapon(galaxy=self.context)
+        
         self.assertEqual(
             "No more photon torpedoes! || ",
             self.context.GetAllOutput()
         )
 
-    def test_TorpedoMissesDueToRandomFactors(self):
+    def test_torpedo_misses_due_to_random_factors(self):
         distanceWhereRandomFactorsHoldSway = 2500
         self.context.SetValueForTesting("target", MockKlingon(distanceWhereRandomFactorsHoldSway, 200))
         Game.generator = MockRandom()  # without this the test would often fail
+
         self.game.FireWeapon(galaxy=self.context)
+
         self.assertEqual(
             "Torpedo missed Klingon at 2500 sectors... || ",
             self.context.GetAllOutput()
         )
         self.assertEqual(7, self.game.torpedoes)
 
-    def test_TorpedoMissesDueToDistanceAndCleverKlingonEvasiveActions(self):
+    def test_torpedo_misses_due_to_distance_and_clever_klingon_evasive_actions(self):
         distanceWhereTorpedoesAlwaysMiss = 3500
         self.context.SetValueForTesting("target", MockKlingon(distanceWhereTorpedoesAlwaysMiss, 200))
+
         self.game.FireWeapon(galaxy=self.context)
+
         self.assertEqual(
             "Torpedo missed Klingon at 3500 sectors... || ",
             self.context.GetAllOutput()
         )
         self.assertEqual(7, self.game.torpedoes)
 
-    def test_TorpedoDestroysKlingon(self):
+    def test_torpedo_destroys_klingon(self):
         klingon = MockKlingon(500, 200)
         self.context.SetValueForTesting("target", klingon)
         Game.generator = MockRandom()
+
         self.game.FireWeapon(self.context)
+
         self.assertEqual(
             "Photons hit Klingon at 500 sectors with 825 units || Klingon destroyed! || ",
             self.context.GetAllOutput()
@@ -57,10 +65,12 @@ class PhotonPinningTests(unittest.TestCase):
         self.assertEqual(7, self.game.torpedoes)
         self.assertTrue(klingon.DeleteWasCalled())
 
-    def test_TorpedoDamagesKlingon(self):
+    def test_torpedo_damages_klingon(self):
         self.context.SetValueForTesting("target", MockKlingon(500, 2000))
         Game.generator = MockRandom()
+
         self.game.FireWeapon(self.context)
+
         self.assertEqual(
             "Photons hit Klingon at 500 sectors with 825 units || Klingon has 1175 remaining || ",
             self.context.GetAllOutput()
