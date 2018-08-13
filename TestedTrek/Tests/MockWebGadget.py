@@ -2,7 +2,7 @@
 from TestedTrek.Game.galaxy import Galaxy
 
 
-class MockGalaxy(Galaxy):
+class MockWebGadget(Galaxy):
     def __init__(self):
         Galaxy.__init__(self, webContext=None)
         self.stuff = {}

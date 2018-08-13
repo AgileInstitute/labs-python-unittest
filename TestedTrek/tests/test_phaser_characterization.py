@@ -4,7 +4,7 @@ import unittest
 from TestedTrek.Game.game import Game
 from TestedTrek.Game.RandomWrapper import Random
 
-from TestedTrek.Tests.MockGalaxy import MockGalaxy
+from TestedTrek.Tests.MockWebGadget import MockWebGadget
 from TestedTrek.Tests.MockKlingon import MockKlingon
 from TestedTrek.Tests.MockRandom import MockRandom
 
@@ -13,7 +13,7 @@ class PhaserCharacterizationTests(unittest.TestCase):
 
     def setUp(self):
         self.game = Game()
-        self.context = MockGalaxy()
+        self.context = MockWebGadget()
         self.energy_in_new_game = 10000
         self.context.set_value_for_testing("command", "phaser")
 
@@ -21,7 +21,7 @@ class PhaserCharacterizationTests(unittest.TestCase):
 
         self.context.set_value_for_testing("amount", str(self.energy_in_new_game + 1))
 
-        self.game.FireWeapon(galaxy=self.context)
+        self.game.FireWeapon(self.context)
 
         self.assertEqual("Insufficient energy to fire phasers! || ",
                          self.context.get_all_output())
@@ -32,7 +32,7 @@ class PhaserCharacterizationTests(unittest.TestCase):
         self.context.set_value_for_testing("amount", "1000")
         self.context.set_value_for_testing("target", MockKlingon(out_of_range))
 
-        self.game.FireWeapon(galaxy=self.context)
+        self.game.FireWeapon(self.context)
 
         self.assertEqual(
             "Klingon out of range of phasers at " + str(out_of_range) + " sectors... || ",
@@ -46,7 +46,7 @@ class PhaserCharacterizationTests(unittest.TestCase):
         self.context.set_value_for_testing("target", klingon)
         Game.generator = MockRandom()
 
-        self.game.FireWeapon(galaxy=self.context)
+        self.game.FireWeapon(self.context)
 
         self.assertEqual(
             "Phasers hit Klingon at 2000 sectors with 400 units || Klingon destroyed! || ",
@@ -64,7 +64,7 @@ class PhaserCharacterizationTests(unittest.TestCase):
         self.context.set_value_for_testing("target", MockKlingon(2000, 200))
         Game.generator = MockRandom()
 
-        self.game.FireWeapon(galaxy=self.context)
+        self.game.FireWeapon(self.context)
 
         self.assertEqual(
             "Phasers hit Klingon at 2000 sectors with " +

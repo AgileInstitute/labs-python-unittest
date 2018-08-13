@@ -3,7 +3,7 @@ import unittest
 
 from TestedTrek.Game.game import Game
 from TestedTrek.Game.RandomWrapper import Random
-from TestedTrek.Tests.MockGalaxy import MockGalaxy
+from TestedTrek.Tests.MockWebGadget import MockWebGadget
 from TestedTrek.Tests.MockKlingon import MockKlingon
 from TestedTrek.Tests.MockRandom import MockRandom
 
@@ -12,14 +12,14 @@ class PhotonCharacterizationTests(unittest.TestCase):
 
     def setUp(self):
         self.game = Game()
-        self.context = MockGalaxy()
+        self.context = MockWebGadget()
         self.context.set_value_for_testing("command", "photon")
 
     def test_notified_if_no_torpedoes_remain(self):
         self.game.torpedoes = 0
         self.context.set_value_for_testing("target", MockKlingon(2000, 200))
 
-        self.game.FireWeapon(galaxy=self.context)
+        self.game.FireWeapon(self.context)
 
         self.assertEqual(
             "No more photon torpedoes! || ",
@@ -31,7 +31,7 @@ class PhotonCharacterizationTests(unittest.TestCase):
         self.context.set_value_for_testing("target", MockKlingon(distanceWhereRandomFactorsHoldSway, 200))
         Game.generator = MockRandom()  # without this the test would often fail
 
-        self.game.FireWeapon(galaxy=self.context)
+        self.game.FireWeapon(self.context)
 
         self.assertEqual(
             "Torpedo missed Klingon at 2500 sectors... || ",
@@ -43,7 +43,7 @@ class PhotonCharacterizationTests(unittest.TestCase):
         distance_where_torpedoes_always_miss = 3500
         self.context.set_value_for_testing("target", MockKlingon(distance_where_torpedoes_always_miss, 200))
 
-        self.game.FireWeapon(galaxy=self.context)
+        self.game.FireWeapon(self.context)
 
         self.assertEqual(
             "Torpedo missed Klingon at 3500 sectors... || ",

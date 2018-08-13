@@ -65,11 +65,8 @@ class Game(object):
             else:
                 wg.WriteLine("No more photon torpedoes!")
 
-    def FireWeapon(self, galaxy=None, webContext=None):
-        if galaxy:
-            self._fire_weapon(galaxy)
-        elif webContext:
-            self._fire_weapon(Galaxy(webContext=webContext))
+    def FireWeapon(self, webContext=None):
+            self._fire_weapon(webContext)
 
     @staticmethod
     def Rnd(maximum):
