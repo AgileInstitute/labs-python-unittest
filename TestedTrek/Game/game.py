@@ -30,15 +30,15 @@ class Game(object):
             if (self.e >= amount):
                 distance = enemy.Distance()
                 if (distance > 4000):
-                    wg.WriteLine("Klingon out of range of phasers at " + str(distance) + " sectors...")
+                    wg.WriteLine("Klingon out of range of phasers at {:.0f} sectors...".format(distance))
                 else:
                     damage = amount - (((amount / 20) * distance / 200) + Game.Rnd(200))
                     if (damage < 1):
                         damage = 1
-                    wg.WriteLine("Phasers hit Klingon at " + str(distance) + " sectors with " + str(damage) + " units")
+                    wg.WriteLine("Phasers hit Klingon at {:.0f} sectors with {:.0f} units".format(distance, damage))
                     if (damage < enemy.GetEnergy()):
                         enemy.SetEnergy(enemy.GetEnergy() - damage)
-                        wg.WriteLine("Klingon has " + str(enemy.GetEnergy()) + " remaining")
+                        wg.WriteLine("Klingon has {:.0f} remaining".format(enemy.GetEnergy()))
                     else:
                         wg.WriteLine("Klingon destroyed!")
                         enemy.Delete()
@@ -50,14 +50,14 @@ class Game(object):
             if (self.t > 0):
                 distance = enemy.Distance()
                 if ((Game.Rnd(4) + ((distance / 500) + 1) > 7)):
-                    wg.WriteLine("Torpedo missed Klingon at " + str(distance) + " sectors...")
+                    wg.WriteLine("Torpedo missed Klingon at {:.0f} sectors...".format(distance))
                 else:
                     damage = 800 + Game.Rnd(50)
-                    wg.WriteLine("Photons hit Klingon at " + str(distance) + " sectors with " + str(damage) + " units")
+                    wg.WriteLine("Photons hit Klingon at {:.0f} sectors with {:.0f} units".format(distance, damage))
 
                     if (damage < enemy.GetEnergy()):
                         enemy.SetEnergy(enemy.GetEnergy() - damage)
-                        wg.WriteLine("Klingon has " + str(enemy.GetEnergy()) + " remaining")
+                        wg.WriteLine("Klingon has {:.0f} remaining".format(enemy.GetEnergy()))
                     else:
                         wg.WriteLine("Klingon destroyed!")
                         enemy.Delete()
