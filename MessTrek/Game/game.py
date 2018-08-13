@@ -8,7 +8,7 @@ class Game(object):
         self.e = 10000
         self.t = 8
 
-    def _fire_weapon(self, wg):
+    def fire_weapon(self, wg):
         if (wg.Parameter("command") == "phaser"):
             amount = int(wg.Parameter("amount"))
             enemy = wg.Variable("target")
@@ -50,9 +50,6 @@ class Game(object):
                 self.t -= 1
             else:
                 wg.WriteLine("No more photon torpedoes!")
-
-    def FireWeapon(self, webContext=None):
-            self._fire_weapon(webContext)
 
     @staticmethod
     def Rnd(maximum):

@@ -6,4 +6,4 @@ if __name__ == '__main__':
     print("Simple Star Trek")
     wg = WebGadget("phaser", "1000", Klingon())
     game = Game()
-    game.FireWeapon(wg)
+    game.fire_weapon(wg)
