@@ -1,5 +1,4 @@
 
-from TestedTrek.Game.galaxy import Galaxy
 from TestedTrek.Game.RandomWrapper import Random
 
 

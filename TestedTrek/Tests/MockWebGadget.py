@@ -1,10 +1,9 @@
 
-from TestedTrek.Game.galaxy import Galaxy
+from TestedTrek.Untouchables.webgadget import WebGadget
 
 
-class MockWebGadget(Galaxy):
+class MockWebGadget(WebGadget):
     def __init__(self):
-        Galaxy.__init__(self, webContext=None)
         self.stuff = {}
         self.my_string = ''
 
