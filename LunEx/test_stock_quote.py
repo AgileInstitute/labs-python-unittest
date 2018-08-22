@@ -49,5 +49,4 @@ class StockQuoteTest(unittest.TestCase):
                       LunExServiceUnavailableException("sunspots"))
         quote = StockQuote("HE3", 100, service);
 
-        with self.assertRaises(EarthboundError):
-            quote.total()
+        self.assertRaises(EarthboundError, quote.total)
