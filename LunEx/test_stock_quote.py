@@ -2,6 +2,7 @@ import unittest
 
 from mock import MagicMock
 
+from lunexservices import LunExServiceUnavailableException
 from lunexservices import LunExServices
 
 
@@ -12,9 +13,17 @@ class StockQuote:
         self.exchange_service = exchange_service
 
     def total(self):
-        return int(self.number_shares
-                   * self.exchange_service.current_price(self.symbol)
-                   * 1.02) + 10;
+        try:
+
+            return int(self.number_shares
+                       * self.exchange_service.current_price(self.symbol)
+                       * 1.02) + 10;
+        except LunExServiceUnavailableException as e:
+            raise EarthboundError(e)
+
+
+class EarthboundError(Exception):
+    pass
 
 
 class StockQuoteTest(unittest.TestCase):
@@ -33,3 +42,12 @@ class StockQuoteTest(unittest.TestCase):
         total = quote.total()
 
         self.assertEqual(1234, total)
+
+    def test_earthbound_exception_raised_on_sunspots(self):
+        service = LunExServices();
+        service.current_price = MagicMock(side_effect= \
+                      LunExServiceUnavailableException("sunspots"))
+        quote = StockQuote("HE3", 100, service);
+
+        with self.assertRaises(EarthboundError):
+            quote.total()
