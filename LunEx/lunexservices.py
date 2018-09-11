@@ -34,7 +34,7 @@ class LunExServices(SecurityExchangeTransmissionInterface):
         time.sleep(5)
 
     def seedRandomGenerator(self):
-        random.seed(long(time.time() * 256))
+        random.seed(int(time.time() * 256))
 
     def randomIntegerBetweenZeroAnd(self, maximum):
         return int(random.random() * maximum)
